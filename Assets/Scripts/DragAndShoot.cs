@@ -14,6 +14,8 @@ public class DragAndShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.SetInt("shoot", 0);
+
         rb = GetComponent<Rigidbody>();
     }
 
@@ -25,18 +27,22 @@ public class DragAndShoot : MonoBehaviour
     private void OnMouseDrag()
     {
         Vector3 forceInit = (Input.mousePosition - mousePressDownPos);
-        Vector3 forceV = (new Vector3(forceInit.x, forceInit.y, z:forceInit.y))*forceMultiplier;
+        Vector3 forceV = (new Vector3(forceInit.x, forceInit.y, z: forceInit.y)) * forceMultiplier;
 
         if (!isShoot)
-            //    Trajectory.Instance.UpdateTrajectory( forceVector: forceV, rb, startingPoint: transform.position);
-            Trajectory.Instance.UpdateTrajectory(forceVector: forceV, rb,  Vector3.zero);
+        {    //    Trajectory.Instance.UpdateTrajectory( forceVector: forceV, rb, startingPoint: transform.position);
+            Trajectory.Instance.UpdateTrajectory(forceVector: forceV, rb, Vector3.zero);
+
+            //StartCoroutine(PlayerControl.Instance.ExecuteAfterTime(5));
+        }
     }
 
     private void OnMouseUp()
     {
         Trajectory.Instance.HideLine();
         mouseReleasePos = Input.mousePosition;
-        Shoot(Force:mousePressDownPos - mouseReleasePos);
+
+        StartCoroutine(PlayerControl.Instance.ExecuteAfterTime(0));
     }
 
     private float forceMultiplier = 5;
@@ -48,5 +54,13 @@ public class DragAndShoot : MonoBehaviour
 
         rb.AddForce(new Vector3(Force.x, Force.y, z: Force.y)* forceMultiplier);
         isShoot = true;
+    }
+
+    private void Update()
+    {
+        if (PlayerPrefs.GetInt("shoot") == 1)
+        {
+            Shoot(Force: mousePressDownPos - mouseReleasePos);
+        }
     }
 }
