@@ -45,7 +45,7 @@ public class DragAndShoot : MonoBehaviour
         StartCoroutine(PlayerControl.Instance.ExecuteAfterTime(0));
     }
 
-    private float forceMultiplier = 5;
+    private float forceMultiplier = 15;
 
     void Shoot(Vector3 Force)
     {
@@ -61,6 +61,7 @@ public class DragAndShoot : MonoBehaviour
         if (PlayerPrefs.GetInt("shoot") == 1)
         {
             Shoot(Force: mousePressDownPos - mouseReleasePos);
+
         }
     }
 }

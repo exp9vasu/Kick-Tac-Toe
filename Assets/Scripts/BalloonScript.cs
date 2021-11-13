@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BalloonScript : MonoBehaviour
 {
-
     public static BalloonScript Instance;
 
     private void Awake()
@@ -32,6 +32,22 @@ public class BalloonScript : MonoBehaviour
         {
             GetComponent<MeshRenderer>().enabled = false;
             this.gameObject.transform.GetChild(0).gameObject .SetActive(true);
-;        }
+            this.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+
+            StartCoroutine(ExecuteMoveIcon(5));
+        }
     }
+
+    IEnumerator ExecuteMoveIcon(float Time)
+    {
+        yield return new WaitForSeconds(Time);
+
+        //this.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+
+        //GameManager.instance. NextLevel();
+
+        GameManager.instance.GameOverPanel.SetActive(true);
+    }
+    
+
 }

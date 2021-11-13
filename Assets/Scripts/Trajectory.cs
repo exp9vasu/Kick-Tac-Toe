@@ -46,6 +46,7 @@ public class Trajectory : MonoBehaviour
                 y: velocity.y * stepTimePassed - 0.5f * Physics.gravity.y * stepTimePassed * stepTimePassed,
                 z: velocity.z * stepTimePassed
                 ) ;
+
             if (i == 0)
             {
                 _linePoints.Add(item: startingPoint);
